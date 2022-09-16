@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: undefined,
         aspectRatio: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        alignItems: 'center'
     },
     textWrapper: {
         width: '100%',

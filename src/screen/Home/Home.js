@@ -2,8 +2,10 @@ import { View, Text, Image, StyleSheet, TextInput, FlatList, ScrollView, Touchab
 import React, { useState, useEffect } from 'react'
 import DicoverCard from '../../components/Card/DicoverCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCategoriesList, getDiscoverList, getMovieBySearch, getMovieList, SetCategoryActive } from '../../redux/actions/movie'
+import { getCategoriesList, getDiscoverList, getMovieBySearch, getMovieList, resetOnload, SetCategoryActive } from '../../redux/actions/movie'
 import { useNavigation } from '@react-navigation/native'
+import SkeletonDicoverCard from '../../components/skeletonLoad/SkeletonDicoverCard'
+import { batch } from 'react-redux'
 
 const Home = () => {
     const [search, setSearch] = useState('')
@@ -12,15 +14,11 @@ const Home = () => {
     const dispatch = useDispatch();
     const navigation = useNavigation()
     useEffect(() => {
-        dispatch(getDiscoverList()).then(() => {
-            //   console.log(movie.discoverList);
-        })
-        dispatch(getMovieList()).then(() => {
-            //   console.log(movie.movieList, "<<<<<<<<< movie list");
-        })
-        dispatch(getCategoriesList()).then(() => {
-            console.log(movie.categoriesList, "<<<<<<<<< movie list");
-        })
+        dispatch(resetOnload())
+        dispatch(getDiscoverList())
+        dispatch(getMovieList())
+        dispatch(getCategoriesList())
+
     }, [])
 
     const [discover, setdiscover] = useState([1, 2, 3])
@@ -31,7 +29,7 @@ const Home = () => {
 
     const onSearchMovie = (val) => {
         dispatch(getMovieBySearch(val)).then(() => {
-            navigation.navigate('home', {screen: 'Search'})
+            navigation.navigate('home', { screen: 'Search' })
         })
     }
     return (
@@ -58,7 +56,6 @@ const Home = () => {
                         keyboardType="default"
                         returnKeyType='search'
                         size="lg"
-                        autoFocus={true}
                         value={search}
                         onChangeText={value => setSearch(value)}
                         onSubmitEditing={() => onSearchMovie(search)}
@@ -71,34 +68,49 @@ const Home = () => {
             <View style={[styles.boxWrapper, { marginTop: 20 }]}>
                 <Text style={styles.largeText}>Discover</Text>
             </View>
-            <FlatList
-                style={styles.flatlistBox}
-                contentContainerStyle={{ paddingLeft: 30 }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={movie?.discoverList}
-                renderItem={({ item }) => (
-                    <DicoverCard
-                        ID={item.id}
-                        Title={item.original_title.length > 13
-                            ? item.original_title.slice(0, 13) + ' ...'
-                            : item.original_title} UrlImage={item.backdrop_path}
-                        Genre={item.genre_ids[0]} />
-                )}
-                keyExtractor={(item, index) => String(index)}
-            />
+            {movie && movie?.discoverOnload ?
+                <FlatList
+                    style={styles.flatlistBox}
+                    contentContainerStyle={{ paddingLeft: 30 }}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={[0, 1, 2]}
+                    renderItem={({ item }) => (
+                        <SkeletonDicoverCard />
+                    )}
+                    keyExtractor={(item, index) => String(index)}
+                />
+                :
+                <FlatList
+                    style={styles.flatlistBox}
+                    contentContainerStyle={{ paddingLeft: 30 }}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={movie?.discoverList}
+                    renderItem={({ item }) => (
+                        <DicoverCard
+                            ID={item.id}
+                            Title={item.original_title.length > 13
+                                ? item.original_title.slice(0, 13) + ' ...'
+                                : item.original_title} UrlImage={item.backdrop_path}
+                            Genre={item.genre_ids[0]} />
+                    )}
+                    keyExtractor={(item, index) => String(index)}
+                />
+
+            }
             <View style={[styles.boxWrapper, { marginTop: 20 }]}>
                 <Text style={styles.mediumText}>Categories</Text>
             </View>
             <FlatList
-                style={{height: 40}}
+                style={{ height: 40 }}
                 contentContainerStyle={{ paddingLeft: 30 }}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 data={movie?.categoriesList}
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => setCategorytoActive(item.name)} style={movie?.categoryActive === item.name ? styles.buttonCategoriesActive : styles.buttonCategoriesInActive}>
-                        <Text style={ movie?.categoryActive === item.name ? styles.categoriesTextActive : styles.categoriesTextInActive }>{item.name}</Text>
+                        <Text style={movie?.categoryActive === item.name ? styles.categoriesTextActive : styles.categoriesTextInActive}>{item.name}</Text>
                     </TouchableOpacity>
                 )}
                 keyExtractor={(item, index) => String(index)}
@@ -109,25 +121,40 @@ const Home = () => {
                     <Text style={styles.mediumRedText}>See All</Text>
                 </TouchableOpacity>
             </View>
-            <FlatList
-                style={styles.flatlistBox}
-                contentContainerStyle={{ paddingLeft: 30 }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={movie?.movieList}
-                renderItem={({ item, index }) => (
-                    index < 10 ?
-                    <DicoverCard
-                    ID={item.id}
-                    Title={item.original_title.length > 13
-                        ? item.original_title.slice(0, 13) + ' ...'
-                        : item.original_title} UrlImage={item.backdrop_path}
-                        Genre={item.genre_ids[0]} />
-                    :
-                        null
-                )}
-                keyExtractor={(item, index) => String(index)}
-            />
+            {movie && movie?.movieListOnload ?
+                <FlatList
+                    style={styles.flatlistBox}
+                    contentContainerStyle={{ paddingLeft: 30 }}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={[0, 1, 2]}
+                    renderItem={({ item }) => (
+                        <SkeletonDicoverCard />
+                    )}
+                    keyExtractor={(item, index) => String(index)}
+                />
+                :
+                <FlatList
+                    style={styles.flatlistBox}
+                    contentContainerStyle={{ paddingLeft: 30 }}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={movie?.movieList}
+                    renderItem={({ item, index }) => (
+                        index < 10 ?
+                            <DicoverCard
+                                ID={item.id}
+                                Title={item.original_title.length > 13
+                                    ? item.original_title.slice(0, 13) + ' ...'
+                                    : item.original_title} UrlImage={item.backdrop_path}
+                                Genre={item.genre_ids[0]} />
+                            :
+                            null
+                    )}
+                    keyExtractor={(item, index) => String(index)}
+                />
+
+            }
         </ScrollView>
     )
 }

@@ -112,3 +112,10 @@ export const getDiscoverList = () => {
       }
     };
   };
+
+  export const resetOnload = () => {
+    return{
+      type: 'SET_RESET_ONLOAD',
+      payload: true,
+    }
+  };

@@ -20,7 +20,6 @@ const Tab = createMaterialTopTabNavigator();
 const BottomTab = ({VisibilityTab}) => {
     const getTabBarVisible = route => {
       const params = route.params;
-      console.log(route, '<<<<< inin params');
       if (params) {
         if (params.tabBarVisible === false) {
           return 'none';

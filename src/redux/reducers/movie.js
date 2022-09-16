@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 const initialState = {
+    discoverOnload: true,
+    movieListOnload: true,
     discoverList: [],
     movieList: [],
     categoriesList: [],
@@ -16,24 +18,28 @@ const initialState = {
         return {
           ...state,
           discoverList: action.payload,
+          discoverOnload: false
         };
       }
       case 'GET_DISCOVER_LIST_FAILED': {
         return {
           ...state,
           discoverList: action.payload,
+          discoverOnload: false
         };
       }
       case 'GET_MOVIE_LIST': {
         return {
           ...state,
           movieList: action.payload,
+          movieListOnload: false
         };
       }
       case 'GET_MOVIE_LIST_FAILED': {
         return {
           ...state,
           movieList: action.payload,
+          movieListOnload: false
         };
       }
       case 'GET_CATEGORIES_LIST': {
@@ -88,6 +94,13 @@ const initialState = {
         return {
           ...state,
           lastSearch: action.payload,
+        };
+      }
+      case 'SET_RESET_ONLOAD': {
+        return {
+          ...state,
+          discoverOnload: action.payload,
+          movieListOnload: action.payload,
         };
       }
       default: {
