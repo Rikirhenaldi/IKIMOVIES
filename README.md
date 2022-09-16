@@ -15,8 +15,8 @@ Technical Test PT. Serasi Autoraya
 ## About The Project
   Mobile Application that provides see list movie, movie detail, mark your fav movie, etc.
 ## Built with  
-[![React v18.2.0](https://img.shields.io/badge/React%20-v17.0.2-brightgreen.svg?style=flat)](https://github.com/facebook/react)
-[![React-Native v0.67.4](https://img.shields.io/badge/React%20-v17.0.2-brightgreen.svg?style=flat)](https://github.com/facebook/react)
+[![React v18.2.0](https://img.shields.io/badge/React%20-v18.2.0-brightgreen.svg?style=flat)](https://github.com/facebook/react)
+[![React-Native v0.67.4](https://img.shields.io/badge/React%20Native-0.67.4-brightgreen)](https://github.com/facebook/react)
 ## Requirements
 1. <a href="https://nodejs.org/en/download/">Node Js</a>
 2. Node_modules `npm install` or `yarn install`
