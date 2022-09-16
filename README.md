@@ -10,7 +10,7 @@ Technical Test PT. Serasi Autoraya
     <a href="https://github.com/Rikirhenaldi/B22-Backend-Beginner/pulls">Request Feature</a>
   </p>
 
-![Image Banner](src/asset/img/homepageCS.png)
+![Image Banner](https://raw.githubusercontent.com/Rikirhenaldi/IKIMOVIES/Development/WhatsApp%20Image%202022-09-05%20at%2019.13.15%20(9).jpeg)
 
 ## About The Project
   Mobile Application that provides see list movie, movie detail, mark your fav movie, etc.
