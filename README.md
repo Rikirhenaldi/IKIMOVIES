@@ -1,7 +1,7 @@
 # IKIMOVIES
 Technical Test PT. Serasi Autoraya
 
-<h1 align='center'>React JS - #Coffee Shop</h1>
+<h1 align='center'>React Native - #IKIMOVIES</h1>
   <p align="center">
     <a href="https://hardcore-swanson-a934ad.netlify.app/">View Demo</a>
     ·
