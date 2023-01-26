@@ -1,5 +1,4 @@
 # IKIMOVIES
-Technical Test PT. Serasi Autoraya
 
 <h1 align='center'>React Native - #IKIMOVIES</h1>
   <p align="center">
